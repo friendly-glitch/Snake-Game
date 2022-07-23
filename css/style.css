@@ -1,0 +1,48 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+html{
+    box-sizing: border-box;
+}
+*{
+    box-sizing: inherit;
+}
+.container__inner {
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+}
+.playground {
+    width: 440px;
+    height: 440px;
+}
+.playground__row {
+    display: flex;
+}
+.playground__cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+}
+.playground__snake-head{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 39px;
+    height: 39px;
+    border: 1px solid black;
+    border-radius: 50%;
+    font-size: 45px;
+    background-color: antiquewhite;
+}
+.playground__snake-body{
+    width: 39px;
+    height: 39px;
+    border: 1px solid black;
+    border-radius: 50%;
+    background-color: sienna;
+}
