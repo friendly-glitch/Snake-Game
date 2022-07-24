@@ -30,7 +30,7 @@ html{
 }
 .playground__snake-head{
     display: flex;
-    justify-content: center;
+    
     align-items: center;
     width: 39px;
     height: 39px;
@@ -38,6 +38,18 @@ html{
     border-radius: 50%;
     font-size: 45px;
     background-color: antiquewhite;
+}
+.playground__snake-head_down{
+    justify-content: center;
+}
+.playground__snake-head_up{
+    padding-bottom: 35px;
+}
+.playground__snake-head_left{
+    justify-content: flex-start;
+}
+.playground__snake-head_right{
+    justify-content: flex-end;
 }
 .playground__snake-body{
     width: 39px;

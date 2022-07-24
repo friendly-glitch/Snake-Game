@@ -1,10 +1,10 @@
 function createPlayground(){
-    for(let i = 0;i <10;i++){
-        let playgroundRow = document.createElement("div")
+    for(let i = 0;i <11;i++){
+        let playgroundRow = document.createElement("tr")
         playgroundRow.classList.add("playground__row")
-        playground.append(playgroundRow)
+        playground.tBodies[0].append(playgroundRow)
         for(let j = 0;j < 11;j++){
-            let playgroundCell = document.createElement("div")
+            let playgroundCell = document.createElement("td")
             playgroundCell.classList.add("playground__cell")
             playgroundRow.append(playgroundCell)
         }
@@ -13,18 +13,124 @@ function createPlayground(){
 function createSnake(){
     let snakeHead = document.createElement("div")
     snakeHead.classList.add("playground__snake-head")
+    snakeHead.classList.add("playground__snake-head_down")
     snakeHead.innerText = ". ."
-    playground.children[5].children[5].append(snakeHead)
+    playground.tBodies[0].rows[snake.head[1]].cells[snake.head[0]].append(snakeHead)
 
     let snakeBody = document.createElement("div")
     snakeBody.classList.add("playground__snake-body")
-    playground.children[4].children[5].append(snakeBody)
+    playground.tBodies[0].rows[snake.body[1][1]].cells[snake.body[1][0]].append(snakeBody)
 
     snakeBody = document.createElement("div")
     snakeBody.classList.add("playground__snake-body") 
-    playground.children[3].children[5].append(snakeBody)
+    playground.tBodies[0].rows[snake.body[0][1]].cells[snake.body[0][0]].append(snakeBody)
 }
-
+function moveSnake(){
+    playground.tBodies[0].innerHTML = ''
+    createPlayground()
+    for(let i = snake.body.length-1; i>=0; i-- ){
+        if(i == 0 ) {
+            snake.body[i] = snake.head.slice(0);
+         
+            continue;
+        }
+        snake.body[i] = snake.body[i-1].slice(0)
+   
+    }
+    console.log(snake.body);
+    let snakeHead
+    switch(moveDirection){
+        case "down":
+            snake.head[1]++   
+            snakeHead = document.createElement("div")
+            snakeHead.className = ""
+            snakeHead.classList.add("playground__snake-head")
+            snakeHead.classList.add("playground__snake-head_down")
+            snakeHead.innerText = ". ."
+            playground.tBodies[0].rows[snake.head[1]].cells[snake.head[0]].append(snakeHead)
+            
+            for(let i=Object.keys(snake).length-1;i>=0;i--){
+                let  snakeBody = document.createElement("div")
+                snakeBody.classList.add("playground__snake-body") 
+                playground.tBodies[0].rows[snake.body[i][1]].cells[snake.body[i][0]].append(snakeBody)
+            }
+            break;
+        case "up":
+            snake.head[1]-- 
+            snakeHead = document.createElement("div")
+            snakeHead.className = ""
+            snakeHead.classList.add("playground__snake-head")
+            snakeHead.classList.add("playground__snake-head_up")
+            snakeHead.innerText = ". ."
+            playground.tBodies[0].rows[snake.head[1]].cells[snake.head[0]].append(snakeHead)
+            
+            for(let i=Object.keys(snake).length-1;i>=0;i--){
+                let  snakeBody = document.createElement("div")
+                snakeBody.classList.add("playground__snake-body") 
+                playground.tBodies[0].rows[snake.body[i][1]].cells[snake.body[i][0]].append(snakeBody)
+            }
+            break;
+        case "left":
+            snake.head[0]--
+            snakeHead = document.createElement("div")
+            snakeHead.className = ""
+            snakeHead.classList.add("playground__snake-head")
+            snakeHead.classList.add("playground__snake-head_left")
+            snakeHead.innerText = ":"
+            playground.tBodies[0].rows[snake.head[1]].cells[snake.head[0]].append(snakeHead)
+            
+            for(let i=Object.keys(snake).length-1;i>=0;i--){
+                let  snakeBody = document.createElement("div")
+                snakeBody.classList.add("playground__snake-body") 
+                playground.tBodies[0].rows[snake.body[i][1]].cells[snake.body[i][0]].append(snakeBody)
+            }
+            break;
+        case "right":
+            snake.head[0]++
+            snakeHead = document.createElement("div")
+            snakeHead.className = ""
+            snakeHead.classList.add("playground__snake-head")
+            snakeHead.classList.add("playground__snake-head_right")
+            snakeHead.innerText = ":"
+            playground.tBodies[0].rows[snake.head[1]].cells[snake.head[0]].append(snakeHead)
+            
+            for(let i=Object.keys(snake).length-1;i>=0;i--){
+                let  snakeBody = document.createElement("div")
+                snakeBody.classList.add("playground__snake-body") 
+                playground.tBodies[0].rows[snake.body[i][1]].cells[snake.body[i][0]].append(snakeBody)
+            }
+            break;
+    }
+}
 let playground = document.querySelector(".playground")
+let moveDirection = "down"
+let snake = {
+    "head":[5,5],
+    "body":[[5,4],[5,3]],
+}
 createPlayground()
 createSnake()
+document.addEventListener("keyup", function(e){
+    if(e.key != "Enter" ) return
+    document.addEventListener("keydown",function(e){
+        switch(e.code){
+            case "ArrowLeft":
+                moveDirection = "left"
+                break;
+            case "ArrowUp":
+                moveDirection = "up"
+                break;
+            case "ArrowRight":
+                moveDirection = "right"
+                break;
+            case "ArrowDown":
+                moveDirection = "down"
+                break;
+        }
+    })
+    let movement = setInterval(function(){
+        moveSnake()
+    },1000)
+})
+
+  
