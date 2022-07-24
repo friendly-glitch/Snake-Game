@@ -7,6 +7,7 @@ function createPlayground(){
             let playgroundCell = document.createElement("td")
             playgroundCell.classList.add("playground__cell")
             playgroundRow.append(playgroundCell)
+            console.log(playgroundCell.innerHTML);
         }
     }
 }
@@ -42,6 +43,7 @@ function moveSnake(){
     switch(moveDirection){
         case "down":
             snake.head[1]++   
+            if(JSON.stringify(snake.head)  == JSON.stringify(berryPlacement)) eatBerry()
             snakeHead = document.createElement("div")
             snakeHead.className = ""
             snakeHead.classList.add("playground__snake-head")
@@ -57,6 +59,7 @@ function moveSnake(){
             break;
         case "up":
             snake.head[1]-- 
+            if(JSON.stringify(snake.head)  == JSON.stringify(berryPlacement)) eatBerry()
             snakeHead = document.createElement("div")
             snakeHead.className = ""
             snakeHead.classList.add("playground__snake-head")
@@ -72,6 +75,7 @@ function moveSnake(){
             break;
         case "left":
             snake.head[0]--
+            if(JSON.stringify(snake.head)  == JSON.stringify(berryPlacement)) eatBerry()
             snakeHead = document.createElement("div")
             snakeHead.className = ""
             snakeHead.classList.add("playground__snake-head")
@@ -87,6 +91,7 @@ function moveSnake(){
             break;
         case "right":
             snake.head[0]++
+            if(JSON.stringify(snake.head)  == JSON.stringify(berryPlacement)) eatBerry()
             snakeHead = document.createElement("div")
             snakeHead.className = ""
             snakeHead.classList.add("playground__snake-head")
@@ -101,6 +106,30 @@ function moveSnake(){
             }
             break;
     }
+    createBerry()
+
+}
+function createBerry(){
+    berryCells = []
+    for(let i = 0;i <11;i++){
+        for(let j = 0;j < 11;j++){
+            if(playground.tBodies[0].rows[i].cells[j].innerHTML == '') berryCells.push([i,j])            
+        }
+    }
+    console.log(berryCells);  
+    if(!berryPlaced){   
+        berryPlacement = berryCells[Math.floor(Math.random()*berryCells.length)]
+        playground.tBodies[0].rows[berryPlacement[1]].cells[berryPlacement[0]].innerHTML = "&#10084;"
+        berryPlaced = true
+        console.log(berryPlacement);
+        return;
+    }
+    playground.tBodies[0].rows[berryPlacement[1]].cells[berryPlacement[0]].innerHTML = "&#10084;"
+}
+function eatBerry(){
+    playground.tBodies[0].rows[berryPlacement[1]].cells[berryPlacement[0]].innerHTML = ""
+    berryPlaced = false
+
 }
 let playground = document.querySelector(".playground")
 let moveDirection = "down"
@@ -108,8 +137,12 @@ let snake = {
     "head":[5,5],
     "body":[[5,4],[5,3]],
 }
+let berryCells = []
+let berryPlacement
+let berryPlaced = false
 createPlayground()
 createSnake()
+createBerry()
 document.addEventListener("keyup", function(e){
     if(e.key != "Enter" ) return
     document.addEventListener("keydown",function(e){
@@ -131,6 +164,9 @@ document.addEventListener("keyup", function(e){
     let movement = setInterval(function(){
         moveSnake()
     },1000)
+    document.addEventListener("keydown",function(e){
+        if(e.code == "Space") clearInterval(movement)
+    })
 })
-
+// playground.tBodies[0].rows[3].cells[2].innerHTML = "F"
   
