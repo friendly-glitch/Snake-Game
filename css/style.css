@@ -47,9 +47,11 @@ html{
 }
 .playground__snake-head_left{
     justify-content: flex-start;
+    padding-bottom: 5px;
 }
 .playground__snake-head_right{
     justify-content: flex-end;
+    padding-bottom: 5px;
 }
 .playground__snake-body{
     width: 39px;
