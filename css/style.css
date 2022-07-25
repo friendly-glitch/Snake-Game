@@ -17,6 +17,11 @@ html{
     width: 440px;
     height: 440px;
 }
+.playground__tooltip{
+    text-align: center;
+    font-weight: 600;
+    font-size: 30px;
+}
 .playground__row {
     display: flex;
 }
@@ -59,4 +64,7 @@ html{
     border: 1px solid black;
     border-radius: 50%;
     background-color: sienna;
+}
+.fa-raspberry-pi{
+    font-size: 30px;
 }
