@@ -7,7 +7,6 @@ function createPlayground(){
             let playgroundCell = document.createElement("td")
             playgroundCell.classList.add("playground__cell")
             playgroundRow.append(playgroundCell)
-            console.log(playgroundCell.innerHTML);
         }
     }
 }
@@ -30,15 +29,15 @@ function moveSnake(){
     playground.tBodies[0].innerHTML = ''
     createPlayground()
     for(let i = snake.body.length-1; i>=0; i-- ){
+        if(i == snake.body.length-1) snake.tail = snake.body[i].slice(0)
         if(i == 0 ) {
             snake.body[i] = snake.head.slice(0);
          
             continue;
         }
         snake.body[i] = snake.body[i-1].slice(0)
-   
+        console.log(snake.body[i]);
     }
-    console.log(snake.body);
     let snakeHead
     switch(moveDirection){
         case "down":
@@ -51,7 +50,7 @@ function moveSnake(){
             snakeHead.innerText = ". ."
             playground.tBodies[0].rows[snake.head[1]].cells[snake.head[0]].append(snakeHead)
             
-            for(let i=Object.keys(snake).length-1;i>=0;i--){
+            for(let i=snake.body.length-1;i>=0;i--){
                 let  snakeBody = document.createElement("div")
                 snakeBody.classList.add("playground__snake-body") 
                 playground.tBodies[0].rows[snake.body[i][1]].cells[snake.body[i][0]].append(snakeBody)
@@ -67,7 +66,7 @@ function moveSnake(){
             snakeHead.innerText = ". ."
             playground.tBodies[0].rows[snake.head[1]].cells[snake.head[0]].append(snakeHead)
             
-            for(let i=Object.keys(snake).length-1;i>=0;i--){
+            for(let i=snake.body.length-1;i>=0;i--){
                 let  snakeBody = document.createElement("div")
                 snakeBody.classList.add("playground__snake-body") 
                 playground.tBodies[0].rows[snake.body[i][1]].cells[snake.body[i][0]].append(snakeBody)
@@ -83,7 +82,7 @@ function moveSnake(){
             snakeHead.innerText = ":"
             playground.tBodies[0].rows[snake.head[1]].cells[snake.head[0]].append(snakeHead)
             
-            for(let i=Object.keys(snake).length-1;i>=0;i--){
+            for(let i=snake.body.length-1;i>=0;i--){
                 let  snakeBody = document.createElement("div")
                 snakeBody.classList.add("playground__snake-body") 
                 playground.tBodies[0].rows[snake.body[i][1]].cells[snake.body[i][0]].append(snakeBody)
@@ -99,7 +98,7 @@ function moveSnake(){
             snakeHead.innerText = ":"
             playground.tBodies[0].rows[snake.head[1]].cells[snake.head[0]].append(snakeHead)
             
-            for(let i=Object.keys(snake).length-1;i>=0;i--){
+            for(let i=snake.body.length-1;i>=0;i--){
                 let  snakeBody = document.createElement("div")
                 snakeBody.classList.add("playground__snake-body") 
                 playground.tBodies[0].rows[snake.body[i][1]].cells[snake.body[i][0]].append(snakeBody)
@@ -116,12 +115,12 @@ function createBerry(){
             if(playground.tBodies[0].rows[i].cells[j].innerHTML == '') berryCells.push([i,j])            
         }
     }
-    console.log(berryCells);  
+     
     if(!berryPlaced){   
         berryPlacement = berryCells[Math.floor(Math.random()*berryCells.length)]
         playground.tBodies[0].rows[berryPlacement[1]].cells[berryPlacement[0]].innerHTML = "&#10084;"
         berryPlaced = true
-        console.log(berryPlacement);
+
         return;
     }
     playground.tBodies[0].rows[berryPlacement[1]].cells[berryPlacement[0]].innerHTML = "&#10084;"
@@ -129,13 +128,18 @@ function createBerry(){
 function eatBerry(){
     playground.tBodies[0].rows[berryPlacement[1]].cells[berryPlacement[0]].innerHTML = ""
     berryPlaced = false
-
+    // let snakeTail = document.createElement("div")
+    // snakeTail.classList.add("playground__snake-body")
+    // playground.tBodies[0].rows[snake.tail[1]].cells[snake.tail[0]].append(snakeTail)
+    snake.body.push(snake.tail)
+   
 }
 let playground = document.querySelector(".playground")
 let moveDirection = "down"
 let snake = {
     "head":[5,5],
     "body":[[5,4],[5,3]],
+    "tail":[5,3],
 }
 let berryCells = []
 let berryPlacement
@@ -163,7 +167,7 @@ document.addEventListener("keyup", function(e){
     })
     let movement = setInterval(function(){
         moveSnake()
-    },1000)
+    },300)
     document.addEventListener("keydown",function(e){
         if(e.code == "Space") clearInterval(movement)
     })
