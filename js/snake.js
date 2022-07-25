@@ -128,7 +128,7 @@ function createBerry() {
     berryCells = []
     for (let i = 0; i < 11; i++) {
         for (let j = 0; j < 11; j++) {
-            if (playground.tBodies[0].rows[i].cells[j].innerHTML == '') berryCells.push([i, j])
+            if (playground.tBodies[0].rows[i].cells[j].innerHTML == '') berryCells.push([j, i])
         }
     }
 
@@ -199,7 +199,7 @@ document.addEventListener("keyup", function (e) {
     })
     movement = setInterval(function () {
         moveSnake()
-    }, 500)
+    }, 200)
     document.addEventListener("keydown", function (e) {
         if (e.code == "Space") clearInterval(movement)
     })
