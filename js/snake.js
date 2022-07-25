@@ -176,6 +176,7 @@ let berryCells = []
 let berryPlacement
 let berryPlaced = false
 let movement
+let speed = 400
 createPlayground()
 createSnake()
 createBerry()
@@ -199,9 +200,38 @@ document.addEventListener("keyup", function (e) {
     })
     movement = setInterval(function () {
         moveSnake()
-    }, 200)
+    }, speed)
     document.addEventListener("keydown", function (e) {
         if (e.code == "Space") clearInterval(movement)
     })
+})
+document.addEventListener("click",function(e){
+    if(e.target.classList.contains("speed-buttons__fast")){
+        let btns = Array.from(e.target.parentNode.children)
+        btns.forEach(element => {
+            element.classList.remove("btn_active")
+        });
+        e.target.classList.add("btn_active")
+        speed = 200
+        return
+    } 
+    if(e.target.classList.contains("speed-buttons__medium")){
+                let btns = Array.from(e.target.parentNode.children)
+        btns.forEach(element => {
+            element.classList.remove("btn_active")
+        });
+        e.target.classList.add("btn_active")
+        speed = 400
+        return
+    }
+    if(e.target.classList.contains("speed-buttons__slow")){
+                let btns = Array.from(e.target.parentNode.children)
+        btns.forEach(element => {
+            element.classList.remove("btn_active")
+        });
+        e.target.classList.add("btn_active")        
+        speed = 600
+        return
+    }
 })
 
