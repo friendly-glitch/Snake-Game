@@ -134,12 +134,12 @@ function createBerry() {
 
     if (!berryPlaced) {
         berryPlacement = berryCells[Math.floor(Math.random() * berryCells.length - 1)]
-        playground.tBodies[0].rows[berryPlacement[1]].cells[berryPlacement[0]].innerHTML = "&#10084;"
+        playground.tBodies[0].rows[berryPlacement[1]].cells[berryPlacement[0]].innerHTML = '<i class="fab fa-raspberry-pi"></i>'
         berryPlaced = true
 
         return;
     }
-    playground.tBodies[0].rows[berryPlacement[1]].cells[berryPlacement[0]].innerHTML = "&#10084;"
+    playground.tBodies[0].rows[berryPlacement[1]].cells[berryPlacement[0]].innerHTML = '<i class="fab fa-raspberry-pi"></i>'
 }
 function eatBerry() {
     playground.tBodies[0].rows[berryPlacement[1]].cells[berryPlacement[0]].innerHTML = ""
