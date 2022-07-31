@@ -109,17 +109,23 @@ function moveSnake() {
                 break;
         }
     } catch (error) {
-        alert("Game Over")
-        clearInterval(movement)
-        playground.tBodies[0].innerHTML = ''
-        snakeRestart()
+        gameOver()
+        setTimeout(function(){
+            playground.tBodies[0].innerHTML = ''
+            snakeRestart()
+        },1000)
+        return
     }
 
     if (playground.tBodies[0].rows[snake.head[1]].cells[snake.head[0]].children.length > 1) {
-        alert("Game Over")
-        clearInterval(movement)
-        playground.tBodies[0].innerHTML = ''
-        snakeRestart()
+        let body = playground.tBodies[0].rows[snake.head[1]].cells[snake.head[0]].querySelector(".playground__snake-body")
+        body.remove()
+
+        gameOver()
+        setTimeout(function(){
+            playground.tBodies[0].innerHTML = ''
+            snakeRestart()
+        },1000)
     }
     createBerry()
 
@@ -165,6 +171,19 @@ function snakeRestart() {
     createSnake()
     createBerry()
 }
+
+function gameOver(){
+    let title  = document.createElement("div")
+    title.classList.add("playground__game-over-title")
+    title.textContent = 'GAME OVER'
+    playground.style.backgroundColor = 'rgb(0, 0, 0,0.5)'  
+    clearInterval(movement)
+    playground.tBodies[0].rows[0].append(title)
+    setTimeout(() => {
+        playground.style.backgroundColor = 'white'
+    }, 1000);
+
+}
 let playground = document.querySelector(".playground")
 let moveDirection = "down"
 let snake = {
@@ -180,7 +199,7 @@ let speed = 400
 createPlayground()
 createSnake()
 createBerry()
-document.addEventListener("keyup", function (e) {
+let startGame = document.addEventListener("keyup", function (e) {
     if (e.key != "Enter") return
     document.addEventListener("keydown", function (e) {
         switch (e.code) {
@@ -204,6 +223,7 @@ document.addEventListener("keyup", function (e) {
     document.addEventListener("keydown", function (e) {
         if (e.code == "Space") clearInterval(movement)
     })
+    
 })
 document.addEventListener("click",function(e){
     if(e.target.classList.contains("speed-buttons__fast")){

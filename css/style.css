@@ -16,6 +16,14 @@ html{
 .playground {
     width: 440px;
     height: 440px;
+    /* background-color: rgb(0, 0, 0,0.5); */
+}
+.playground__game-over-title{
+    color: red;
+    font-size: 70px;
+    position: absolute;
+    margin-top: 170px;
+    margin-left: 15px;
 }
 .playground__tooltip{
     text-align: center;
@@ -71,8 +79,7 @@ html{
 }
 
 /* Speed Buttons */
-.speed-buttons {
-}
+
 .btn {
     display: block;
     margin: 10px 0;
